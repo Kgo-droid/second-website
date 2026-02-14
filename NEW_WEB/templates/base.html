@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}Kgo's Website{% endblock %}</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Varela Round"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body
+    class="bg-neutral-50 dark:bg-black min-h-screen flex flex-col items-center justify-center transition-colors duration-500 overflow-hidden relative">
+
+    <div class="absolute top-8 left-8 z-50">
+        <button onclick="toggleTheme()" class="text-3xl hover:scale-110 transition">
+            <span class="inline dark:hidden text-yellow-500">☀️</span>
+            <span class="hidden dark:inline text-red-500">🌙</span>
+        </button>
+    </div>
+
+    <main class="w-full max-w-4xl p-4 relative z-10">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <script>
+        // Check for saved theme
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark')
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
+
+        function toggleTheme() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.theme = 'light';
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.theme = 'dark';
+            }
+        }
+    </script>
+</body>
+
+</html>
